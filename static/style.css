@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('design.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.form-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    width: 340px;
+    text-align: center;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.toggle-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    margin-top: 15px;
+    display: block;
+}
+
+.toggle-link:hover {
+    color: #0056b3;
+}
+
+.error-msg {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 5px;
+    display: none;
+}
+
+button.toggle-link {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    margin-top: 15px;
+    padding: 5px;
+    display: block;
+    width: auto;
+    font-weight: normal;
+}
+
+button.toggle-link:hover {
+    color: #0056b3;
+    background: none;
+}
