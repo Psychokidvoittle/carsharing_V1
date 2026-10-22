@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, render_template
 import json
 
 app = Flask(__name__, static_folder='static')
@@ -17,13 +17,13 @@ def save_cars(cars):
 @app.route('/')
 def index():
     # Эта строка принудительно берёт index.html из той же папки, где лежит app.py
-    return send_from_directory(os.path.dirname(__file__), 'index.html')
+    return render_template('index.html')
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
     if USERS.get(data.get('login')) == data.get('password'):
-        return jsonify({"success": True})
+        return jsonify({"success": True, "login": data.get('login')})
     return jsonify({"success": False})
 
 @app.route('/cars')
@@ -34,7 +34,7 @@ def get_cars_list():
 @app.route('/book', methods=['POST'])
 def book():
     cars = get_cars()
-    car_id = request.json.get('car_id')
+    car_id = int(request.json.get('car_id', 0))
     for car in cars:
         if car['id'] == car_id and car['free']:
             car['free'] = False
