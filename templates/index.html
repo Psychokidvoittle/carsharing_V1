@@ -13,38 +13,42 @@
         <form id="loginForm">
             <input type="text" id="login" placeholder="Логин" required>
             <input type="password" id="password" placeholder="Пароль" required>
+            <div id="loginError" style="color: #e74c3c; margin: 8px 0; display: none; font-size: 14px;"></div>
             <button type="submit">Войти</button>
         </form>
         <button type="button" class="toggle-link" onclick="showRegister()">Нет аккаунта? Зарегистрироваться</button>
     </div>
 
-    <!-- Блок регистрации (скрыт по умолчанию) -->
+    <!-- Блок регистрации -->
     <div id="registerBlock" class="form-box" style="display: none;">
         <h2>Регистрация</h2>
         <form id="registerForm">
-            <input type="email" id="regEmail" placeholder="Email" required>
-            <!-- Строгая проверка: только +7 или 8, и ровно 10 цифр после -->
-            <input type="tel" id="regPhone" placeholder="+79991234567" pattern="^(\+7|8)\d{10}$" title="Введите ровно 11 цифр: +7 или 8, затем 10 цифр (без пробелов и тире)" required>
+            <input type="text" id="regLogin" placeholder="Придумайте логин" required>
             <input type="password" id="regPassword" placeholder="Придумайте пароль" required>
-            <input type="password" id="regPasswordConfirm" placeholder="Повторите пароль" required>
-            <p id="regError" class="error-msg">Пароли не совпадают!</p>
+            <div id="regError" style="color: #e74c3c; margin: 8px 0; display: none; font-size: 14px;"></div>
             <button type="submit">Зарегистрироваться</button>
         </form>
         <button type="button" class="toggle-link" onclick="showLogin()">Уже есть аккаунт? Войти</button>
     </div>
 
-    <!-- Блок брони (скрыт до успешного логина) -->
+    <!-- Блок бронирования -->
     <div id="bookBlock" class="form-box" style="display: none;">
         <h2>Бронирование</h2>
         <p>Привет, <span id="usernameDisplay" style="font-weight: bold;"></span>!</p>
+
         <form id="bookForm">
             <label for="carSelect" style="display:block; text-align:left; margin-bottom:5px; font-size:14px;">Выберите машину:</label>
             <select id="carSelect" required>
-                <option value="">Загрузка...</option>
+                <option value="">-- Выберите автомобиль --</option>
             </select>
             <button type="submit">Забронировать</button>
         </form>
+
         <p id="message" style="margin-top: 15px; font-weight: bold;"></p>
+
+        <button onclick="logout()" style="margin-top: 20px; background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; width: 100%;">
+            Выйти
+        </button>
     </div>
 
     <script src="/static/script.js"></script>

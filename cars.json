@@ -1,5 +1,38 @@
 [
-  {"id": 1, "name": "Kia Rio",         "price": 10, "free": true},
-  {"id": 2, "name": "Hyundai Solaris", "price": 12, "free": true},
-  {"id": 3, "name": "VW Polo",         "price": 11, "free": true}
+  {
+    "id": 1,
+    "name": "Kia Rio",
+    "price": 10,
+    "free": true
+  },
+  {
+    "id": 2,
+    "name": "Hyundai Solaris",
+    "price": 12,
+    "free": true
+  },
+  {
+    "id": 3,
+    "name": "VW Polo",
+    "price": 11,
+    "free": true
+  },
+  {
+    "id": 4,
+    "name": "Skoda Rapid",
+    "price": 13,
+    "free": true
+  },
+  {
+    "id": 5,
+    "name": "Renault Logan",
+    "price": 9,
+    "free": true
+  },
+  {
+    "id": 6,
+    "name": "Lada Vesta",
+    "price": 8,
+    "free": true
+  }
 ]

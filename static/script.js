@@ -1,4 +1,4 @@
-// Переключение между формами
+// === Переключение форм ===
 function showRegister() {
     document.getElementById('loginBlock').style.display = 'none';
     document.getElementById('registerBlock').style.display = 'block';
@@ -8,89 +8,97 @@ function showRegister() {
 function showLogin() {
     document.getElementById('registerBlock').style.display = 'none';
     document.getElementById('loginBlock').style.display = 'block';
+    document.getElementById('loginError').style.display = 'none';
 }
 
-// Обработка регистрации
+// === Регистрация ===
 document.getElementById('registerForm').onsubmit = async (e) => {
     e.preventDefault();
-    const pass = document.getElementById('regPassword').value;
-    const passConfirm = document.getElementById('regPasswordConfirm').value;
-    const errorMsg = document.getElementById('regError');
 
-    // Проверка совпадения паролей
-    if (pass !== passConfirm) {
-        errorMsg.textContent = 'Пароли не совпадают!';
-        errorMsg.style.display = 'block';
-        return;
-    }
+    const login = document.getElementById('regLogin').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const errorBlock = document.getElementById('regError');
 
-    // MVP: Имитация успешной регистрации (пока без отправки на сервер)
-    // Когда "Человек 2" будет готов, он раскомментирует код ниже
-    /*
     const res = await fetch('/register', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            email: document.getElementById('regEmail').value,
-            phone: document.getElementById('regPhone').value,
-            password: pass
-        })
+        body: JSON.stringify({ login, password })
     });
-    const data = await res.json();
-    if (!data.success) { alert('Ошибка регистрации'); return; }
-    */
 
-    alert('Регистрация успешна! Теперь войдите в систему.');
-    document.getElementById('registerForm').reset();
-    showLogin();
-};
-
-// Логин
-document.getElementById('loginForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const loginInput = document.getElementById('login').value;
-    
-    const res = await fetch('/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            login: loginInput,
-            password: document.getElementById('password').value
-        })
-    });
-    
     const data = await res.json();
+
     if (data.success) {
-        document.getElementById('loginBlock').style.display = 'none';
-        document.getElementById('bookBlock').style.display = 'block';
-        document.getElementById('usernameDisplay').textContent = loginInput;
-        loadCars();
+        alert(data.message);
+        document.getElementById('registerForm').reset();
+        showLogin();
     } else {
-        alert('Неверный логин или пароль');
+        errorBlock.style.display = 'block';
+        errorBlock.textContent = data.message;
     }
 };
 
-// Загрузка списка свободных машин
+// === Логин ===
+document.getElementById('loginForm').onsubmit = async (e) => {
+    e.preventDefault();
+
+    const login = document.getElementById('login').value;
+    const password = document.getElementById('password').value;
+    const errorBlock = document.getElementById('loginError');
+
+    const res = await fetch('/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ login, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        document.getElementById('loginBlock').style.display = 'none';
+        document.getElementById('bookBlock').style.display = 'block';
+        document.getElementById('usernameDisplay').textContent = data.login;
+        errorBlock.style.display = 'none';
+        await loadCars();
+    } else {
+        errorBlock.style.display = 'block';
+        errorBlock.textContent = 'Неверный логин или пароль';
+    }
+};
+
+// === Выход ===
+function logout() {
+    location.reload();
+}
+
+// === Загрузка машин ===
 async function loadCars() {
     const res = await fetch('/cars');
     const cars = await res.json();
     const select = document.getElementById('carSelect');
+
     select.innerHTML = '<option value="">-- Выберите автомобиль --</option>';
-    
+
     cars.forEach(car => {
         const option = document.createElement('option');
         option.value = car.id;
-        option.textContent = `${car.name} (ID: ${car.id}) — ${car.price} у.е.`;
+        option.textContent = `${car.name} — ${car.price} у.е.`;
         select.appendChild(option);
     });
 }
 
-// Бронирование
+// === Бронирование ===
 document.getElementById('bookForm').onsubmit = async (e) => {
     e.preventDefault();
+
     const carId = parseInt(document.getElementById('carSelect').value);
     const msgElement = document.getElementById('message');
-    
+
+    if (!carId) {
+        msgElement.textContent = 'Сначала выберите машину';
+        msgElement.style.color = 'red';
+        return;
+    }
+
     msgElement.textContent = 'Обработка...';
     msgElement.style.color = 'gray';
 
@@ -99,12 +107,12 @@ document.getElementById('bookForm').onsubmit = async (e) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ car_id: carId })
     });
-    
+
     const data = await res.json();
     msgElement.textContent = data.message;
     msgElement.style.color = data.success ? 'green' : 'red';
-    
+
     if (data.success) {
-        loadCars(); // Обновляем список
+        await loadCars();
     }
 };
