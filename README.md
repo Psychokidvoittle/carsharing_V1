@@ -2,8 +2,8 @@
 
 ## Запуск
 ## Если требуется изолированное окружение, то пользуемся данными командами:
-`py -m venv venv`
-`venv\Scripts\activate`
+1. `py -m venv venv`
+2. `venv\Scripts\activate`
 ## Даллее запускаем:
 1. `pip install -r requirements.txt`
 2. `python app.py`
