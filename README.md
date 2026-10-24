@@ -4,7 +4,7 @@
 ## Если требуется изолированное окружение, то пользуемся данными командами:
 1. `py -m venv venv`
 2. `venv\Scripts\activate`
-## Даллее запускаем:
+## Далее запускаем:
 1. `pip install -r requirements.txt`
 2. `python app.py`
 3. Открыть http://localhost:5000
